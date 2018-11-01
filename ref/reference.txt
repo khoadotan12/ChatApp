@@ -1,0 +1,4 @@
+react-redux-firebase - https://github.com/prescottprue/react-redux-firebase
+Deploy Your Site Firebase - https://firebase.google.com/docs/hosting/deploying
+v2 Migration Guide - http://react-redux-firebase.com/docs/v2-migration-guide.html
+Redux: https://redux.js.org/
