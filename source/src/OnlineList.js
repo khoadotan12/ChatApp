@@ -21,16 +21,16 @@ class OnlineList extends Component {
             <ul className="list">
                 {online ? Object.keys(online).map((user) =>
                     (
-                        uemail !== online[user].email ?
+                        uemail !== online[user].profile.email ?
                             <li key={user} onClick={() => console.log('click')} className="clearfix">
-                                <img src={online[user].avatarUrl} width='55' height='55' alt="avatar" />
+                                <img src={online[user].profile.avatarUrl} width='55' height='55' alt="avatar" />
                                 <div className="about">
-                                    <div className="name">{online[user].displayName}</div>
+                                    <div className="name">{online[user].profile.displayName}</div>
                                     <div className="status">
                                         <i className="fa fa-circle online"></i> online
                              </div>
                                 </div>
-                            </li> : uemail
+                            </li> : ''
                     )
                 ) : <p>No user online</p>}
             </ul>
@@ -44,9 +44,9 @@ OnlineList.propTypes = {
 }
 
 export default compose(
-    firebaseConnect(['users']),
+    firebaseConnect(['online']),
     connect(({ firebase }) => ({
-        online: firebase.data.users,
+        online: firebase.data.online,
         uemail: firebase.auth.email,
     })),
     withFirebase,
