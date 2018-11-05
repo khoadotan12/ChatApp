@@ -1,10 +1,10 @@
 export const firebase = {
-  apiKey: "AIzaSyBoR7thHM5NJSD5CwFGcSp972wmSbA8eJ4",
-  authDomain: "project-7189739376974029480.firebaseapp.com",
-  databaseURL: "https://project-7189739376974029480.firebaseio.com",
-  projectId: "project-7189739376974029480",
-  storageBucket: "project-7189739376974029480.appspot.com",
-  messagingSenderId: "80563335399"
+  apiKey: "AIzaSyAiLujaGBEqpe9K9JFrPc-7Ztid7olNScU",
+  authDomain: "chatapp-gd2.firebaseapp.com",
+  databaseURL: "https://chatapp-gd2.firebaseio.com",
+  projectId: "chatapp-gd2",
+  storageBucket: "chatapp-gd2.appspot.com",
+  messagingSenderId: "286572345168"
 }
 
 export default { firebase }

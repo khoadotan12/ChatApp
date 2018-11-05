@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import GoogleButton from 'react-google-button'
 import './App.css'
 import OnlineList from './OnlineList'
+import Chat from './Chat'
+import logo from './logo.svg'
 class Navbar extends Component {
   render() {
     const { avatarUrl,
@@ -10,7 +12,9 @@ class Navbar extends Component {
       authExists,
       authLoaded,
       handleLogout,
-      googleLogin
+      googleLogin,
+      loadChat,
+      user
     } = this.props;
     return (
       <div>
@@ -27,14 +31,24 @@ class Navbar extends Component {
               //   anchorEl={anchorEl}
               // />
               <div>
-                <p><img className="avatar" src={avatarUrl} alt="avatar" /> {displayName}</p>
-                <button className="button" onClick={handleLogout}>Sign out</button><br />
-                <OnlineList />
+                <div className="info">
+                  <p><img className="avatar" src={avatarUrl} alt="avatar" /> {displayName}</p>
+                  <button className="button" onClick={handleLogout}>Sign out</button>
+                </div>
+                <div className="container clearfix">
+                  <OnlineList loadChat={(user) => loadChat(user)} />
+                  <Chat user={user} />
+                </div>
               </div>
             ) : (
-                <div>
-                  <GoogleButton onClick={googleLogin} />
-                  <OnlineList />
+                <div className='App'>
+                  <div className='App-header'>
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>
+                      Welcome
+          </p><br />
+                    <GoogleButton onClick={googleLogin} />
+                  </div>
                 </div>
               )}
           </div>) : (null)}
@@ -46,8 +60,10 @@ Navbar.propTypes = {
   displayName: PropTypes.string,
   avatarUrl: PropTypes.string,
   authExists: PropTypes.bool,
+  authLoaded: PropTypes.bool,
   handleLogout: PropTypes.func.isRequired,
   googleLogin: PropTypes.func.isRequired,
+  loadChat: PropTypes.func.isRequired
 }
 
 export default Navbar

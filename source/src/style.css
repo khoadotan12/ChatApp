@@ -13,13 +13,13 @@ body {
 .container {
   margin: 0 auto;
   margin-top: 40px;
-  width: 750px;
+  width: 60%;
   background: #444753;
   border-radius: 5px;
 }
 
 .people-list {
-  width: 260px;
+  width: 30%;
   float: left;
 }
 .people-list .search {
@@ -65,7 +65,7 @@ body {
 }
 
 .chat {
-  width: 490px;
+  width: 70%;
   float: left;
   background: #F2F5F8;
   border-top-right-radius: 5px;
