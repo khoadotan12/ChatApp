@@ -120,7 +120,7 @@ class Chat extends Component {
                                             return (
                                                 <li key={mes} className="clearfix">
                                                     <div className="message-data align-right">
-                                                        <span className="message-data-time" >{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString()}</span> &nbsp;
+                                                        <span className="message-data-time" >{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString('vi-VN')}</span> &nbsp;
             <span className="message-data-name" >Me </span> <i className="fa fa-circle me"></i>
 
                                                     </div>
@@ -132,7 +132,7 @@ class Chat extends Component {
                                             <li key={mes}>
                                                 <div className="message-data">
                                                     <span className="message-data-name"><i className="fa fa-circle online"></i> {user.profile.displayName}</span>
-                                                    <span className="message-data-time">{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString()}</span>
+                                                    <span className="message-data-time">{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString('vi-VN')}</span>
                                                 </div>
                                                 <div className="message my-message">
                                                     {mesObj[mes].message}
