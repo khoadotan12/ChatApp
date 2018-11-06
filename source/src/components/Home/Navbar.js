@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GoogleButton from 'react-google-button'
-import './App.css'
-import OnlineList from './OnlineList'
-import Chat from './Chat'
-import logo from './logo.svg'
+import '../../css/App.css'
+import OnlineList from '../OnlineList'
+import Chat from '../Chat'
+import logo from '../../logo.svg'
 class Navbar extends Component {
   render() {
     const { avatarUrl,
@@ -21,15 +21,6 @@ class Navbar extends Component {
         {authLoaded ? (
           <div>
             {authExists ? (
-              // <AccountMenu
-              //   avatarUrl={avatarUrl}
-              //   displayName={displayName}
-              //   onLogoutClick={handleLogout}
-              //   goToAccount={goToAccount}
-              //   closeAccountMenu={closeAccountMenu}
-              //   handleMenu={handleMenu}
-              //   anchorEl={anchorEl}
-              // />
               <div>
                 <div className="info">
                   <p><img className="avatar" src={avatarUrl} alt="avatar" /> {displayName}</p>

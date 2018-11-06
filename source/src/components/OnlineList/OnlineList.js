@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './style.css'
-import { connect } from 'react-redux'
-import {
-    compose,
-} from 'recompose'
-import { firebaseConnect, withFirebase } from 'react-redux-firebase'
+import '../../css/style.css'
 class OnlineList extends Component {
     minutes_between(time1, time2) {
         const ONE_MINUTE = 1000 * 60;
@@ -81,14 +76,4 @@ OnlineList.propTypes = {
     loadChat: PropTypes.func.isRequired
 }
 
-export default compose(
-    firebaseConnect([{
-        path: '/users',
-        queryParams: ['orderByChild=email', 'notParsed']
-    }]),
-    connect(({ firebase }) => ({
-        online: firebase.data.users,
-        uemail: firebase.auth.email,
-    })),
-    withFirebase,
-)(OnlineList)
+export default OnlineList

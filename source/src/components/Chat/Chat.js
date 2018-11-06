@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import {
-    compose,
-    withProps
-} from 'recompose'
-import './style.css'
-import { firebaseConnect, withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
+import '../../css/App.css'
+
 class Chat extends Component {
     handleSend() {
         const { firebase, uid, user } = this.props;
@@ -168,15 +163,4 @@ Chat.propTypes = {
     mesLoaded: PropTypes.bool
 }
 
-export default compose(
-    firebaseConnect(['chat']),
-    connect(({ firebase, firebase: { auth } }) => ({
-        messages: firebase.data.chat,
-        uid: auth.uid
-    })),
-    withFirebase,
-    withProps(({ messages }) => ({
-        mesLoaded: isLoaded(messages),
-        mesEmpty: isEmpty(messages)
-    })),
-)(Chat);
+export default Chat;
