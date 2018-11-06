@@ -13,9 +13,11 @@ class Chat extends Component {
         const { firebase, uid, user } = this.props;
         if (this.input.value !== '' && user !== null) {
             const date = new Date();
-            firebase.push('/chat/' + uid + '/' + user.uid, { sent: true, message: this.input.value, date: date.toJSON() })
-                .then(() => firebase.push('/chat/' + user.uid + '/' + uid, { sent: false, message: this.input.value, date: date.toJSON() })
-                    .then(() => this.input.value = ''));
+            const mes = this.input.value;
+            firebase.push('/chat/' + uid + '/' + user.uid, { sent: true, message: mes, date: date.toJSON() });
+            firebase.push('/chat/' + user.uid + '/' + uid, { sent: false, message: mes, date: date.toJSON() });
+            firebase.set('/users/' + uid + '/lastOnline', date.toJSON());
+            this.input.value = '';
         }
         else {
             if (user === null) {
@@ -25,10 +27,10 @@ class Chat extends Component {
 
     }
     days_between(date1, date2) {
-        var ONE_DAY = 1000 * 60 * 60 * 24;
-        var date1_ms = date1.getTime();
-        var date2_ms = date2.getTime();
-        var difference_ms = Math.abs(date1_ms - date2_ms);
+        const ONE_DAY = 1000 * 60 * 60 * 24;
+        const date1_ms = date1.getTime();
+        const date2_ms = date2.getTime();
+        const difference_ms = Math.abs(date1_ms - date2_ms);
         return Math.round(difference_ms / ONE_DAY);
     }
     scrollToBottom = () => {
@@ -51,7 +53,7 @@ class Chat extends Component {
                     <div className="chat-header clearfix" style={{ height: 100 }}>
                         <div className="chat-about">
                             <div className="chat-with">Please select user or sign in to continue</div>
-                            <div className="chat-num-messages">already 0 messages</div>
+                            <div className="chat-num-messages" />
                         </div>
                         <i className="fa fa-star"></i>
                     </div>

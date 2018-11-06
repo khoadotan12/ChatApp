@@ -36,7 +36,7 @@ class Navbar extends Component {
                   <button className="button" onClick={handleLogout}>Sign out</button>
                 </div>
                 <div className="container clearfix">
-                  <OnlineList loadChat={(user) => loadChat(user)} />
+                  <OnlineList loadChat={(user, uid) => loadChat(user, uid)} />
                   <Chat user={user} />
                 </div>
               </div>
@@ -46,8 +46,9 @@ class Navbar extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <p>
                       Welcome
-          </p><br />
-                    <GoogleButton onClick={googleLogin} />
+          </p><div style={{marginTop: 40}}>
+                      <GoogleButton onClick={googleLogin} />
+                    </div>
                   </div>
                 </div>
               )}

@@ -9,6 +9,8 @@ import {
   flattenProp,
 } from 'recompose'
 import { withFirebase, isEmpty, isLoaded } from 'react-redux-firebase'
+
+let updateLastOnline = false;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -16,26 +18,26 @@ class Home extends Component {
       chatWith: null
     }
   }
-  loatChat(user) {
+  loatChat(profile, uid) {
     const { authExists } = this.props;
     if (authExists) {
       this.setState({
-        chatWith: user
+        chatWith: { profile, uid }
       })
     }
   }
   handleLogout = () => {
-    const { firebase, auth } = this.props;
+    const { firebase } = this.props;
     firebase.logout();
-    firebase
-      .remove('/online/' + auth.uid)
-      .catch(err => {
-        console.error('Error:', err)
-        Promise.reject(err)
-      })
     this.setState({
       chatWith: null
     });
+  }
+  updateLastOnline() {
+    const { firebase, auth } = this.props;
+    const now = new Date();
+    firebase.set('/users/' + auth.uid + '/lastOnline', now.toJSON());
+    updateLastOnline = true
   }
   render() {
     const { avatarUrl,
@@ -44,8 +46,10 @@ class Home extends Component {
       authLoaded,
       googleLogin,
     } = this.props;
+    if (authExists && authLoaded && !updateLastOnline)
+      this.updateLastOnline()
     return (
-      <Navbar user={this.state.chatWith} loadChat={(user) => this.loatChat(user)} googleLogin={googleLogin} authLoaded={authLoaded} authExists={authExists} displayName={displayName} avatarUrl={avatarUrl} handleLogout={() => this.handleLogout()} />
+      <Navbar user={this.state.chatWith} loadChat={(user, uid) => this.loatChat(user, uid)} googleLogin={googleLogin} authLoaded={authLoaded} authExists={authExists} displayName={displayName} avatarUrl={avatarUrl} handleLogout={() => this.handleLogout()} />
     )
   }
 }
@@ -59,9 +63,10 @@ export default compose(
   withHandlers({
     googleLogin: props => event => {
       const { firebase } = props;
+      const date = new Date();
       firebase
         .login({ provider: 'google', type: 'popup' })
-        .then((result) => firebase.set('/online/' + result.user.uid, { profile: result.profile, uid: result.user.uid }))
+        .then((result) => firebase.set('/users/' + result.user.uid + '/lastOnline', date.toJSON()))
         .catch(err => console.log(err.message));
     }
   }),
