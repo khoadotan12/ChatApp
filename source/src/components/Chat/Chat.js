@@ -9,10 +9,10 @@ class Chat extends Component {
         if (this.input.value !== '' && user !== null) {
             const date = new Date();
             const mes = this.input.value;
-            firebase.push('/chat/' + uid + '/' + user.uid, { sent: true, message: mes, date: date.toJSON() })
-                .then(() => firebase.set('/chat/' + uid + '/' + user.uid + '/lastChat', date.toJSON()));
-            firebase.push('/chat/' + user.uid + '/' + uid, { sent: false, message: mes, date: date.toJSON() })
-                .then(() => firebase.set('/chat/' + user.uid + '/' + uid + '/lastChat', date.toJSON()));
+            firebase.push('/chat/' + uid + '/' + user.id, { sent: true, message: mes, date: date.toJSON() })
+                .then(() => firebase.set('/chat/' + uid + '/' + user.id + '/lastChat', date.toJSON()));
+            firebase.push('/chat/' + user.id + '/' + uid, { sent: false, message: mes, date: date.toJSON() })
+                .then(() => firebase.set('/chat/' + user.id + '/' + uid + '/lastChat', date.toJSON()));
             firebase.set('/users/' + uid + '/lastOnline', date.toJSON());
             this.input.value = '';
         }
@@ -68,10 +68,10 @@ class Chat extends Component {
             const empt = (
                 <div className="chat">
                     <div className="chat-header clearfix">
-                        <img src={user.profile.avatarUrl} width='55' height='55' alt="avatar" />
+                        <img src={user.avatarUrl} width='55' height='55' alt="avatar" />
 
                         <div className="chat-about">
-                            <div className="chat-with">Chat with {user.profile.displayName}</div>
+                            <div className="chat-with">Chat with {user.displayName}</div>
                             <div className="chat-num-messages">already 0 messages</div>
                         </div>
                         <i className="fa fa-star"></i>
@@ -94,29 +94,28 @@ class Chat extends Component {
                 if (mesLoaded) {
                     if (!messages[uid])
                         return (empt);
-                    if (!messages[uid][user.uid]) {
+                    if (!messages[uid][user.id]) {
                         return (empt);
                     }
-                    const mesArr = Object.keys(messages[uid][user.uid]);
-                    const mesObj = messages[uid][user.uid];
+                    const mesArr = Object.keys(messages[uid][user.id]).filter((mes) => {
+                        if (mes === 'lastChat')
+                            return false;
+                        return true;
+                    });
+                    const mesObj = messages[uid][user.id];
                     return (
                         <div className="chat">
                             <div className="chat-header clearfix">
-                                <img src={user.profile.avatarUrl} width='55' height='55' alt="avatar" />
-
+                                <img src={user.avatarUrl} width='55' height='55' alt="avatar" />
                                 <div className="chat-about">
-                                    <div className="chat-with">Chat with {user.profile.displayName}</div>
+                                    <div className="chat-with">Chat with {user.displayName}</div>
                                     <div className="chat-num-messages">already {mesArr.length} messages</div>
                                 </div>
                                 <i className="fa fa-star"></i>
                             </div>
                             <div className="chat-history" ref={(el) => { this.messagesEnd = el }}>
                                 <ul>
-                                    {mesArr.filter((mes) => {
-                                        if (mes === 'lastChat')
-                                            return false;
-                                        return true;
-                                    }).map((mes) => {
+                                    {mesArr.map((mes) => {
                                         const date = new Date(mesObj[mes].date);
                                         const today = new Date();
                                         if (mesObj[mes].sent)
@@ -134,7 +133,7 @@ class Chat extends Component {
                                         return (
                                             <li key={mes}>
                                                 <div className="message-data">
-                                                    <span className="message-data-name"><i className="fa fa-circle online"></i> {user.profile.displayName}</span>
+                                                    <span className="message-data-name"><i className="fa fa-circle online"></i> {user.displayName}</span>
                                                     <span className="message-data-time">{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString('vi-VN')}</span>
                                                 </div>
                                                 <div className="message my-message">

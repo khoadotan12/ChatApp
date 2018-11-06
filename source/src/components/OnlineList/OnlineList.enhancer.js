@@ -9,6 +9,7 @@ export default compose(
         online: firebase.data.users,
         uid: auth.uid,
         messages: firebase.data.chat,
+        uemail: auth.email
     })),
     withFirebase,
 )

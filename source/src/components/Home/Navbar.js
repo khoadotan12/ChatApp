@@ -27,7 +27,7 @@ class Navbar extends Component {
                   <button className="button" onClick={handleLogout}>Sign out</button>
                 </div>
                 <div className="container clearfix">
-                  <OnlineList loadChat={(user, uid) => loadChat(user, uid)} />
+                  <OnlineList loadChat={(user) => loadChat(user)} />
                   <Chat user={user} />
                 </div>
               </div>

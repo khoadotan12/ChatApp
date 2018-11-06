@@ -10,11 +10,11 @@ class Home extends Component {
       chatWith: null
     }
   }
-  loatChat(profile, uid) {
+  loatChat(profile) {
     const { authExists } = this.props;
     if (authExists) {
       this.setState({
-        chatWith: { profile, uid }
+        chatWith: profile
       })
     }
   }
@@ -41,7 +41,7 @@ class Home extends Component {
     if (authExists && authLoaded && !updateLastOnline)
       this.updateLastOnline()
     return (
-      <Navbar user={this.state.chatWith} loadChat={(user, uid) => this.loatChat(user, uid)} googleLogin={googleLogin} authLoaded={authLoaded} authExists={authExists} displayName={displayName} avatarUrl={avatarUrl} handleLogout={() => this.handleLogout()} />
+      <Navbar user={this.state.chatWith} loadChat={(user) => this.loatChat(user)} googleLogin={googleLogin} authLoaded={authLoaded} authExists={authExists} displayName={displayName} avatarUrl={avatarUrl} handleLogout={() => this.handleLogout()} />
     )
   }
 }

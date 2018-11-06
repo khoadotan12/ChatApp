@@ -7,7 +7,7 @@ class OnlineList extends Component {
         const difference_ms = Math.abs(time1.getTime() - time2.getTime());
         return Math.round(difference_ms / ONE_MINUTE);
     }
-    renderUser(user, id) {
+    renderUser(user) {
         const { loadChat } = this.props;
         const now = new Date();
         const date = new Date(user.lastOnline);
@@ -30,7 +30,7 @@ class OnlineList extends Component {
                         <i className="fa fa-circle offline"></i> left {Math.round(left / (60 * 24))} {Math.round(left / (60 * 24)) === 1 ? ' day' : ' days'}  ago
                             </div>
                     );
-        return (<li key={id} onClick={() => loadChat(user, id)} className="clearfix">
+        return (<li key={user.id} onClick={() => loadChat(user)} className="clearfix">
             <img src={user.avatarUrl} width='55' height='55' alt="avatar" />
             <div className="about">
                 <div className="name">{user.displayName}</div>
@@ -39,7 +39,7 @@ class OnlineList extends Component {
         </li>);
     }
     render() {
-        const { online, messages, uid } = this.props;
+        const { uemail, online, messages, uid } = this.props;
         let renderList;
         if (online) {
             let temp = Object.keys(online).map((user) => {
@@ -54,8 +54,12 @@ class OnlineList extends Component {
                         return false;
                     return true;
                 }).map((user) => {
-                    if (messages[uid][user.id])
-                        user.lastChat = messages[uid][user.id].lastChat;
+                    if (messages[uid]) {
+                        if (messages[uid][user.id])
+                            user.lastChat = messages[uid][user.id].lastChat;
+                        else
+                            user.lastChat = 0;
+                    }
                     else
                         user.lastChat = 0;
                     return user
@@ -68,7 +72,11 @@ class OnlineList extends Component {
                     const t2 = new Date(b.lastChat);
                     return t2 - t1;
                 })
-            renderList = temp.map((user) => this.renderUser(user, user.id));
+            renderList = temp.filter(user => {
+                if (uemail === user.email)
+                    return false;
+                return true;
+            }).map((user) => this.renderUser(user));
         }
         else
             renderList = <p>No user online</p>
