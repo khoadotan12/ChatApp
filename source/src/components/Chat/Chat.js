@@ -9,8 +9,10 @@ class Chat extends Component {
         if (this.input.value !== '' && user !== null) {
             const date = new Date();
             const mes = this.input.value;
-            firebase.push('/chat/' + uid + '/' + user.uid, { sent: true, message: mes, date: date.toJSON() });
-            firebase.push('/chat/' + user.uid + '/' + uid, { sent: false, message: mes, date: date.toJSON() });
+            firebase.push('/chat/' + uid + '/' + user.uid, { sent: true, message: mes, date: date.toJSON() })
+                .then(() => firebase.set('/chat/' + uid + '/' + user.uid + '/lastChat', date.toJSON()));
+            firebase.push('/chat/' + user.uid + '/' + uid, { sent: false, message: mes, date: date.toJSON() })
+                .then(() => firebase.set('/chat/' + user.uid + '/' + uid + '/lastChat', date.toJSON()));
             firebase.set('/users/' + uid + '/lastOnline', date.toJSON());
             this.input.value = '';
         }
@@ -110,7 +112,11 @@ class Chat extends Component {
                             </div>
                             <div className="chat-history" ref={(el) => { this.messagesEnd = el }}>
                                 <ul>
-                                    {mesArr.map((mes) => {
+                                    {mesArr.filter((mes) => {
+                                        if (mes === 'lastChat')
+                                            return false;
+                                        return true;
+                                    }).map((mes) => {
                                         const date = new Date(mesObj[mes].date);
                                         const today = new Date();
                                         if (mesObj[mes].sent)

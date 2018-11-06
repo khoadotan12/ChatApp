@@ -39,22 +39,36 @@ class OnlineList extends Component {
         </li>);
     }
     render() {
-        const { online, uemail } = this.props;
+        const { online, messages, uid } = this.props;
         let renderList;
         if (online) {
-            const temp = Object.keys(online).map((user) => {
-
+            let temp = Object.keys(online).map((user) => {
+                online[user].id = user;
                 return (
-                    online[user].id = user,
                     online[user]
                 )
-            }).sort((a, b) => b.email.localeCompare(a.email));
-            console.log(temp);
-            renderList = Object.keys(online).map((user) =>
-                (
-                    uemail !== online[user].email ?
-                        this.renderUser(online[user], user) : ''
-                ));
+            })
+            if (messages)
+                temp = temp.filter((user) => {
+                    if (uid === user.id)
+                        return false;
+                    return true;
+                }).map((user) => {
+                    if (messages[uid][user.id])
+                        user.lastChat = messages[uid][user.id].lastChat;
+                    else
+                        user.lastChat = 0;
+                    return user
+                }).sort((a, b) => {
+                    if (b.lastChat === 0)
+                        return -1;
+                    if (a.lastChat === 0)
+                        return 1;
+                    const t1 = new Date(a.lastChat);
+                    const t2 = new Date(b.lastChat);
+                    return t2 - t1;
+                })
+            renderList = temp.map((user) => this.renderUser(user, user.id));
         }
         else
             renderList = <p>No user online</p>
@@ -72,7 +86,6 @@ class OnlineList extends Component {
 
 OnlineList.propTypes = {
     online: PropTypes.object,
-    uemail: PropTypes.string,
     loadChat: PropTypes.func.isRequired
 }
 

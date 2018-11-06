@@ -4,13 +4,11 @@ import {
 } from 'recompose'
 import { firebaseConnect, withFirebase } from 'react-redux-firebase'
 export default compose(
-    firebaseConnect([{
-        path: '/users',
-        queryParams: ['orderByChild=email', 'notParsed']
-    }]),
-    connect(({ firebase }) => ({
+    firebaseConnect(['/users', '/chat']),
+    connect(({ firebase, firebase: { auth } }) => ({
         online: firebase.data.users,
-        uemail: firebase.auth.email,
+        uid: auth.uid,
+        messages: firebase.data.chat,
     })),
     withFirebase,
 )
