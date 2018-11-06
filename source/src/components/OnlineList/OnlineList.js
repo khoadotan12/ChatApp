@@ -64,6 +64,8 @@ class OnlineList extends Component {
                         user.lastChat = 0;
                     return user
                 }).sort((a, b) => {
+                    if (a.lastChat === 0 && b.lastChat === 0)
+                        return (a.id.localeCompare(b.id));
                     if (b.lastChat === 0)
                         return -1;
                     if (a.lastChat === 0)

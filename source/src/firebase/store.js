@@ -2,7 +2,10 @@ import { createStore, compose } from 'redux'
 import rootReducer from './reducer'
 import { firebase as fbConfig } from './config'
 import { reactReduxFirebase } from 'react-redux-firebase'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
 
 const rrfConfig = { userProfile: 'users', enableLogging: false }
 firebase.initializeApp(fbConfig);
