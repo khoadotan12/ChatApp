@@ -7,8 +7,7 @@ import {
 import { connect } from 'react-redux'
 
 export default compose(
-    firebaseConnect(['chat']),
-    firebaseConnect(['star']),
+    firebaseConnect(['chat', 'star']),
     connect(({ firebase, firebase: { auth } }) => ({
         messages: firebase.data.chat,
         star: firebase.data.star,
