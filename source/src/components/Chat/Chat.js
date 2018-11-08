@@ -169,10 +169,12 @@ class Chat extends Component {
 
 Chat.propTypes = {
     uid: PropTypes.string,
+    user: PropTypes.object,
     messages: PropTypes.object,
     mesEmpty: PropTypes.bool,
     mesLoaded: PropTypes.bool,
-    starPerson: PropTypes.func.isRequired
+    starPerson: PropTypes.func.isRequired,
+    star: PropTypes.object
 }
 
 export default Chat;

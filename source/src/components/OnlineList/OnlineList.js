@@ -39,7 +39,7 @@ class OnlineList extends Component {
         </li>);
     }
     render() {
-        const { uemail, online, messages, uid } = this.props;
+        const { star, uemail, online, messages, uid } = this.props;
         let renderList;
         if (online) {
             let temp = Object.keys(online).map((user) => {
@@ -64,6 +64,12 @@ class OnlineList extends Component {
                         user.lastChat = 0;
                     return user
                 }).sort((a, b) => {
+                    if (star) {
+                        if (star[uid + '_' + a.id] && !star[uid + '_' + b.id])
+                            return -1;
+                        if (star[uid + '_' + b.id] && !star[uid + '_' + a.id])
+                            return 1;
+                    }
                     if (a.lastChat === 0 && b.lastChat === 0)
                         return (a.id.localeCompare(b.id));
                     if (b.lastChat === 0)
@@ -96,7 +102,8 @@ class OnlineList extends Component {
 
 OnlineList.propTypes = {
     online: PropTypes.object,
-    loadChat: PropTypes.func.isRequired
+    loadChat: PropTypes.func.isRequired,
+    star: PropTypes.object
 }
 
 export default OnlineList
