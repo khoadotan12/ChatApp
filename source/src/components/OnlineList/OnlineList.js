@@ -1,57 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import '../../css/style.css'
+import User from './User'
 class OnlineList extends Component {
-    minutes_between(time1, time2) {
-        const ONE_MINUTE = 1000 * 60;
-        const difference_ms = Math.abs(time1.getTime() - time2.getTime());
-        return Math.round(difference_ms / ONE_MINUTE);
-    }
-    renderUser(user) {
-        const { loadChat } = this.props;
-        const now = new Date();
-        const date = new Date(user.lastOnline);
-        const left = this.minutes_between(now, date)
-        let status = '';
-        if (left <= 1)
-            status = (<div className="status"><i className="fa fa-circle online"></i> online</div>);
-        else
-            if (left < 60)
-                status = (<div className="status"><i className="fa fa-circle offline"></i> left {left} mins ago </div>);
-            else
-                if (left < (60 * 24))
-                    status = (
-                        <div className="status">
-                            <i className="fa fa-circle offline"></i> left {Math.round(left / 60)} {Math.round(left / 60) === 1 ? ' hour' : ' hours'}  ago
-                            </div>
-                    );
-                else
-                    status = (<div className="status">
-                        <i className="fa fa-circle offline"></i> left {Math.round(left / (60 * 24))} {Math.round(left / (60 * 24)) === 1 ? ' day' : ' days'}  ago
-                            </div>
-                    );
-        return (<li key={user.id} onClick={() => loadChat(user)} className="clearfix">
-            <img src={user.avatarUrl} width='55' height='55' alt="avatar" />
-            <div className="about">
-                <div className="name">{user.displayName}</div>
-                {status}
-            </div>
-        </li>);
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: ''
+        }
     }
     render() {
-        const { star, uemail, online, messages, uid } = this.props;
-        let renderList;
+        const { star, uemail, online, messages, uid, loadChat } = this.props;
+        let renderList = <p></p>;
         if (online) {
             let temp = Object.keys(online).map((user) => {
                 online[user].id = user;
-                return (
-                    online[user]
-                )
+                return online[user];
             })
             if (messages)
                 temp = temp.filter((user) => {
                     if (uid === user.id)
                         return false;
+                    if (this.state.search !== '')
+                        if (user.displayName.toLowerCase().search(this.state.search) !== -1)
+                            return true;
+                        else
+                            return false;
                     return true;
                 }).map((user) => {
                     if (messages[uid]) {
@@ -84,13 +58,13 @@ class OnlineList extends Component {
                 if (uemail === user.email)
                     return false;
                 return true;
-            }).map((user) => this.renderUser(user));
+            }).map((user) => <User key={user.id} user={user} loadChat={loadChat} />);
         }
-        else
-            renderList = <p>No user online</p>
         return (<div className="people-list" id="people-list">
             <div className="search">
-                <input type="text" placeholder="search" />
+                <input type="text" placeholder="search" onChange={(e) => this.setState({
+                    search: e.target.value.replace(new RegExp("\\\\", "g"), "\\\\").toLowerCase()
+                })} />
                 <i className="fa fa-search"></i>
             </div>
             <ul className="list">
@@ -103,6 +77,9 @@ class OnlineList extends Component {
 OnlineList.propTypes = {
     online: PropTypes.object,
     loadChat: PropTypes.func.isRequired,
+    uemail: PropTypes.string,
+    messages: PropTypes.object,
+    uid: PropTypes.string,
     star: PropTypes.object
 }
 
