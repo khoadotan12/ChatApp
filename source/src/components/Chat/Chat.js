@@ -128,7 +128,9 @@ class Chat extends Component {
 
                                                     </div>
                                                     <div className="message other-message float-right">
-                                                        {mesObj[mes].message}
+                                                        {mesObj[mes].message.split("\n").map((item, key) => {
+                                                            return <div key={key}>{item}<br /></div>
+                                                        })}
                                                     </div>
                                                 </li>);
                                         return (
@@ -138,7 +140,9 @@ class Chat extends Component {
                                                     <span className="message-data-time">{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString('vi-VN')}</span>
                                                 </div>
                                                 <div className="message my-message">
-                                                    {mesObj[mes].message}
+                                                    {mesObj[mes].message.split("\n").map((item, key) => {
+                                                        return <div key={key}>{item}<br /></div>
+                                                    })}
                                                 </div>
                                             </li>
                                         )
@@ -152,7 +156,7 @@ class Chat extends Component {
                                     let input = document.createElement('input');
                                     input.type = 'file';
                                     input.accept = 'image/png, image/jpeg, image/bmp';
-                                    input.onchange = (e) => {console.log(e.target.files[0])};
+                                    input.onchange = (e) => { console.log(e.target.files[0]) };
                                     input.click();
                                 }}></i>
                                 <button onClick={() => this.handleSend()}>Send</button>
