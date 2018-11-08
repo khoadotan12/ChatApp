@@ -94,10 +94,18 @@ body {
 }
 .chat .chat-header .fa-star {
   float: right;
-  color: #D8DADF;
   font-size: 20px;
   margin-top: 12px;
 }
+
+.fa-star-untoggle {
+    color: #D8DADF;
+}
+
+.fa-star-toggle {
+  color: #4CAF50;
+}
+
 .chat .chat-history {
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;

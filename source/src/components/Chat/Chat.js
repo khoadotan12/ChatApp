@@ -43,7 +43,7 @@ class Chat extends Component {
         this.scrollToBottom();
     }
     render() {
-        const { user, messages, mesLoaded, mesEmpty, uid } = this.props;
+        const { star, starPerson, user, messages, mesLoaded, mesEmpty, uid } = this.props;
         if (!user || !uid) {
             return (
                 <div className="chat">
@@ -52,7 +52,6 @@ class Chat extends Component {
                             <div className="chat-with">Please select user or sign in to continue</div>
                             <div className="chat-num-messages" />
                         </div>
-                        <i className="fa fa-star"></i>
                     </div>
                     <div className="chat-history" ref={(el) => { this.messagesEnd = el }} />
                     <div className="chat-message clearfix">
@@ -65,6 +64,10 @@ class Chat extends Component {
             );
         }
         else {
+            let classStar = 'fa fa-star fa-star-untoggle';
+            if (star)
+                if (star[uid + '_' + user.id])
+                    classStar = 'fa fa-star fa-star-toggle';
             const empt = (
                 <div className="chat">
                     <div className="chat-header clearfix">
@@ -74,7 +77,7 @@ class Chat extends Component {
                             <div className="chat-with">Chat with {user.displayName}</div>
                             <div className="chat-num-messages">already 0 messages</div>
                         </div>
-                        <i className="fa fa-star"></i>
+                        <i className={classStar} onClick={() => starPerson(user)}></i>
                     </div>
                     <div className="chat-history" ref={(el) => { this.messagesEnd = el }} />
                     <div className="chat-message clearfix">
@@ -111,7 +114,7 @@ class Chat extends Component {
                                     <div className="chat-with">Chat with {user.displayName}</div>
                                     <div className="chat-num-messages">already {mesArr.length} messages</div>
                                 </div>
-                                <i className="fa fa-star"></i>
+                                <i className={classStar} onClick={() => starPerson(user)}></i>
                             </div>
                             <div className="chat-history" ref={(el) => { this.messagesEnd = el }}>
                                 <ul>
@@ -165,7 +168,8 @@ Chat.propTypes = {
     uid: PropTypes.string,
     messages: PropTypes.object,
     mesEmpty: PropTypes.bool,
-    mesLoaded: PropTypes.bool
+    mesLoaded: PropTypes.bool,
+    starPerson: PropTypes.func.isRequired
 }
 
 export default Chat;
