@@ -44,7 +44,7 @@ class Message extends Component {
                                                 new URL(item);
                                                 return (
                                                     <div key={key}>
-                                                        <a href={item} target="_blank">{item}</a>
+                                                        <a href={item} target="_blank">{item}</a><br />
                                                     </div>);
                                             } catch (e) {
                                             }
@@ -62,7 +62,10 @@ class Message extends Component {
                                     {mesObj[mes].message.split("\n").map((item, key) => {
                                         try {
                                             new URL(item);
-                                            return <a key={key} href={item} target="_blank">{item}</a>
+                                            return (
+                                                <div key={key}>
+                                                    <a href={item} target="_blank">{item}</a><br />
+                                                </div>);
                                         } catch (e) {
                                         }
                                         return <div key={key}>{item}<br /></div>
