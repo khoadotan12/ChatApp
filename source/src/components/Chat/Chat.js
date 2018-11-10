@@ -52,7 +52,6 @@ class Chat extends Component {
                 <div className="chat">
                     <div className="chat-header clearfix">
                         <img src={user.avatarUrl} width='55' height='55' alt="avatar" />
-
                         <div className="chat-about">
                             <div className="chat-with">Chat with {user.displayName}</div>
                             <div className="chat-num-messages">already 0 messages</div>
