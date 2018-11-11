@@ -37,12 +37,12 @@ class Message extends Component {
                                 const local = 'chatapp-dagk.appspot.com'
                                 let find = false;
                                 arr.forEach(value => {
-                                    if (item.search(value) !== -1 && !find)
+                                    if (item.toLowerCase().search(value) !== -1 && !find)
                                         find = true;
                                 });
                                 if (find)
                                     return (
-                                        item.search(local) === -1 ? <div key={key}>
+                                        item.toLowerCase().search(local) === -1 ? <div key={key}>
                                             <a href={item} target="_blank">{item}</a> <br />
                                             <a href={item} target="_blank"><img src={item} className="message-image" alt="img" /></a>
                                         </div> :
