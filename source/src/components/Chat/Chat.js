@@ -48,6 +48,18 @@ class Chat extends Component {
             if (star)
                 if (star[uid + '_' + user.id])
                     classStar = 'fa fa-star fa-star-toggle';
+            const sendButton =
+                <div className="chat-message clearfix">
+                    <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3" ref={ref => { this.input = ref }}></textarea>
+                    <i className="fa fa-file-image-o" onClick={() => {
+                        let input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/png, image/jpeg, image/bmp, image/gif';
+                        input.onchange = (e) => { handleUpload(e.target.files[0]) };
+                        input.click();
+                    }}></i>
+                    <button onClick={() => this.handleSend()}>Send</button>
+                </div>
             const empt = (
                 <div className="chat">
                     <div className="chat-header clearfix">
@@ -59,17 +71,7 @@ class Chat extends Component {
                         <i className={classStar} onClick={() => starPerson(user)}></i>
                     </div>
                     <div className="chat-history" ref={(el) => { this.messagesEnd = el }} />
-                    <div className="chat-message clearfix">
-                        <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3" ref={ref => { this.input = ref }}></textarea>
-                        <i className="fa fa-file-image-o" onClick={() => {
-                            let input = document.createElement('input');
-                            input.type = 'file';
-                            input.accept = 'image/png, image/jpeg, image/bmp';
-                            input.onchange = (e) => { handleUpload(e.target.files[0]) };
-                            input.click();
-                        }}></i>
-                        <button onClick={() => this.handleSend()}>Send</button>
-                    </div>
+                    {sendButton}
                 </div>
             );
             if (mesEmpty) {
@@ -101,20 +103,7 @@ class Chat extends Component {
                                 <i className={classStar} onClick={() => starPerson(user)}></i>
                             </div>
                             <Message displayName={user.displayName} mesArr={mesArr} mesObj={mesObj} />
-                            <div className="chat-message clearfix">
-                                <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3" onKeyDown={(e) => {
-                                    if ((e.keyCode === 10 || e.keyCode === 13) && e.ctrlKey)
-                                        this.handleSend();
-                                }} ref={ref => { this.input = ref }}></textarea>
-                                <i className="fa fa-file-image-o" onClick={() => {
-                                    let input = document.createElement('input');
-                                    input.type = 'file';
-                                    input.accept = 'image/png, image/jpeg, image/bmp';
-                                    input.onchange = (e) => { handleUpload(e.target.files[0]) };
-                                    input.click();
-                                }}></i>
-                                <button onClick={() => this.handleSend()}>Send</button>
-                            </div>
+                            {sendButton}
                         </div>
                     );
                 } else {
