@@ -61,7 +61,13 @@ class Chat extends Component {
                     <div className="chat-history" ref={(el) => { this.messagesEnd = el }} />
                     <div className="chat-message clearfix">
                         <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3" ref={ref => { this.input = ref }}></textarea>
-                        <i className="fa fa-file-image-o"></i>
+                        <i className="fa fa-file-image-o" onClick={() => {
+                            let input = document.createElement('input');
+                            input.type = 'file';
+                            input.accept = 'image/png, image/jpeg, image/bmp';
+                            input.onchange = (e) => { handleUpload(e.target.files[0]) };
+                            input.click();
+                        }}></i>
                         <button onClick={() => this.handleSend()}>Send</button>
                     </div>
                 </div>
