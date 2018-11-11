@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Message from '../Message'
+import Message from './Message'
 import '../../css/App.css'
 
 class Chat extends Component {
