@@ -30,6 +30,28 @@ class Message extends Component {
                     {mesArr.map((mes) => {
                         const date = new Date(mesObj[mes].date);
                         const today = new Date();
+                        const mesItem = mesObj[mes].message.split("\n").map((item, key) => {
+                            try {
+                                new URL(item);
+                                const arr = ["jpeg", "jpg", "gif", "png"];
+                                let find = false;
+                                arr.forEach(value => {
+                                    if (item.search(value) !== -1 && !find)
+                                        find = true;
+                                });
+                                if (find)
+                                    return (<div key={key}>
+                                        <a href={item} target="_blank">{item}</a><br />
+                                        <a href={item} target="_blank"><img src={item} className="message-image" alt="img" /></a>
+                                    </div>);
+                                return (
+                                    <div key={key}>
+                                        <a href={item} target="_blank">{item}</a><br />
+                                    </div>);
+                            } catch (e) {
+                            }
+                            return <div key={key}>{item}<br /></div>
+                        });
                         if (mesObj[mes].sent)
                             return (
                                 <li key={mes} className="clearfix">
@@ -39,37 +61,17 @@ class Message extends Component {
 
                                     </div>
                                     <div className="message other-message float-right">
-                                        {mesObj[mes].message.split("\n").map((item, key) => {
-                                            try {
-                                                new URL(item);
-                                                return (
-                                                    <div key={key}>
-                                                        <a href={item} target="_blank">{item}</a><br />
-                                                    </div>);
-                                            } catch (e) {
-                                            }
-                                            return <div key={key}>{item}<br /></div>
-                                        })}
+                                        {mesItem}
                                     </div>
                                 </li>);
                         return (
-                            <li key={mes}>
+                            <li key={mes} className="clearfix">
                                 <div className="message-data">
                                     <span className="message-data-name"><i className="fa fa-circle online"></i> {displayName}</span>
                                     <span className="message-data-time">{date.toLocaleTimeString()}, {this.days_between(date, today) === 0 ? 'Today' : date.toLocaleDateString('vi-VN')}</span>
                                 </div>
                                 <div className="message my-message">
-                                    {mesObj[mes].message.split("\n").map((item, key) => {
-                                        try {
-                                            new URL(item);
-                                            return (
-                                                <div key={key}>
-                                                    <a href={item} target="_blank">{item}</a><br />
-                                                </div>);
-                                        } catch (e) {
-                                        }
-                                        return <div key={key}>{item}<br /></div>
-                                    })}
+                                    {mesItem}
                                 </div>
                             </li>
                         )

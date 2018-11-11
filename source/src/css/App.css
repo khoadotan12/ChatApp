@@ -55,6 +55,11 @@
   align-items: center;
 }
 
+.message-image {
+  width: 85%;
+  height: auto;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
