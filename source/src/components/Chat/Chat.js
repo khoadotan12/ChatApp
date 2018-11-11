@@ -50,7 +50,10 @@ class Chat extends Component {
                     classStar = 'fa fa-star fa-star-toggle';
             const sendButton =
                 <div className="chat-message clearfix">
-                    <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3" ref={ref => { this.input = ref }}></textarea>
+                    <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3" onKeyDown={(e) => {
+                        if ((e.keyCode === 10 || e.keyCode === 13) && e.ctrlKey)
+                            this.handleSend();
+                    }} ref={ref => { this.input = ref }}></textarea>
                     <i className="fa fa-file-image-o" onClick={() => {
                         let input = document.createElement('input');
                         input.type = 'file';
