@@ -45,14 +45,16 @@ class OnlineList extends Component {
                             return 1;
                     }
                     if (a.lastChat === 0 && b.lastChat === 0)
-                        return (a.id.localeCompare(b.id));
+                        return (a.displayName.localeCompare(b.displayName));
                     if (b.lastChat === 0)
                         return -1;
                     if (a.lastChat === 0)
                         return 1;
                     const t1 = new Date(a.lastChat);
                     const t2 = new Date(b.lastChat);
-                    return t2 - t1;
+                    if (t2 - t1 !== 0)
+                        return t2 - t1;
+                    return a.displayName.localeCompare(b.displayName);
                 })
             renderList = temp.filter(user => {
                 if (uemail === user.email)
