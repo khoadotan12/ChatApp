@@ -34,16 +34,20 @@ class Message extends Component {
                             try {
                                 new URL(item);
                                 const arr = ["jpeg", "jpg", "gif", "png"];
+                                const local = 'chatapp-dagk.appspot.com'
                                 let find = false;
                                 arr.forEach(value => {
                                     if (item.search(value) !== -1 && !find)
                                         find = true;
                                 });
                                 if (find)
-                                    return (<div key={key}>
-                                        <a href={item} target="_blank">{item}</a><br />
-                                        <a href={item} target="_blank"><img src={item} className="message-image" alt="img" /></a>
-                                    </div>);
+                                    return (
+                                        item.search(local) === -1 ? <div key={key}>
+                                            <a href={item} target="_blank">{item}</a> <br />
+                                            <a href={item} target="_blank"><img src={item} className="message-image" alt="img" /></a>
+                                        </div> :
+                                            <a href={item} key={key} target="_blank"><img src={item} className="message-image" alt="img" /></a>
+                                    );
                                 return (
                                     <div key={key}>
                                         <a href={item} target="_blank">{item}</a><br />
@@ -78,7 +82,7 @@ class Message extends Component {
                     }
                     )}
                 </ul>
-            </div>
+            </div >
         );
     }
 }

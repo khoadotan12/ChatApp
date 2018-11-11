@@ -3,7 +3,7 @@ export const firebase = {
   authDomain: "chatapp-dagk.firebaseapp.com",
   databaseURL: "https://chatapp-dagk.firebaseio.com",
   projectId: "chatapp-dagk",
-  storageBucket: "",
+  storageBucket: "chatapp-dagk.appspot.com",
   messagingSenderId: "247747844030"
 }
 

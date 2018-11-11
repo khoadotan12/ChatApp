@@ -24,7 +24,7 @@ class Chat extends Component {
 
     }
     render() {
-        const { star, starPerson, user, messages, mesLoaded, mesEmpty, uid } = this.props;
+        const { handleUpload, star, starPerson, user, messages, mesLoaded, mesEmpty, uid } = this.props;
         if (!user || !uid) {
             return (
                 <div className="chat">
@@ -104,7 +104,7 @@ class Chat extends Component {
                                     let input = document.createElement('input');
                                     input.type = 'file';
                                     input.accept = 'image/png, image/jpeg, image/bmp';
-                                    input.onchange = (e) => { console.log(e.target.files[0]) };
+                                    input.onchange = (e) => { handleUpload(e.target.files[0]) };
                                     input.click();
                                 }}></i>
                                 <button onClick={() => this.handleSend()}>Send</button>

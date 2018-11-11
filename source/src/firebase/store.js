@@ -6,6 +6,7 @@ import firebase from 'firebase/app'
 import 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
+import 'firebase/storage'
 
 const rrfConfig = { userProfile: 'users', enableLogging: false }
 firebase.initializeApp(fbConfig);
