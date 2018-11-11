@@ -56,6 +56,28 @@ class OnlineList extends Component {
                         return t2 - t1;
                     return a.displayName.localeCompare(b.displayName);
                 })
+            else
+                temp = temp.filter((user) => {
+                    if (uid === user.id)
+                        return false;
+                    if (this.state.search !== '')
+                        if (user.displayName.toLowerCase().search(this.state.search) !== -1)
+                            return true;
+                        else
+                            return false;
+                    return true;
+                }).map((user) => {
+                        user.lastChat = 0;
+                    return user
+                }).sort((a, b) => {
+                    if (star) {
+                        if (star[uid + '_' + a.id] && !star[uid + '_' + b.id])
+                            return -1;
+                        if (star[uid + '_' + b.id] && !star[uid + '_' + a.id])
+                            return 1;
+                    }
+                    return a.displayName.localeCompare(b.displayName);
+                })
             renderList = temp.filter(user => {
                 if (uemail === user.email)
                     return false;
