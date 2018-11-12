@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import '../../css/style.css'
-import User from '../User'
+import User from './User'
 class OnlineList extends Component {
     constructor(props) {
         super(props);

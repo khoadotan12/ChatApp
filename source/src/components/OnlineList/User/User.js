@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import '../../css/style.css'
+import '../../../css/style.css'
 class User extends Component {
     minutes_between(time1, time2) {
         const ONE_MINUTE = 1000 * 60;
